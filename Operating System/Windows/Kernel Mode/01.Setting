@@ -1,0 +1,20 @@
+Windows Environment Setting
+
+Short cut
+
+Win + S 
+type cmd
+ctrl + shift + enter (Administration Authorize)
+<- + enter
+
+type bcdedit /debug on 
+type bcdedit /testsigning on (when use windbg to use kernel mode debugging)
+
+
+//////////////////////////////////////////////////////////////////////////////
+
+install visual studio 2019, wdk10
+
+wdk10 link : https://docs.microsoft.com/en-us/windows-hardware/drivers/download-the-wdk
+
+When downlaod wdk, please read Step 1: Install visual Studio 2019
