@@ -1,0 +1,27 @@
+1. What is DriverEntry
+
+It is the driver's entry as its name suggest.
+Let's see the code
+
+NTSTATUS DriverEntry(PDRIVER_OBJECT DriverObject, PUNICODE_STRING RegistryPath)
+{
+	UNREFERENCED_PARAMETER(DriverObject);
+	UNREFERENCED_PARAMETER(RegistryPath);
+
+
+	DbgPrintEx(DPFLTR_IHVDRIVER_ID, 0, "Hello Driver");
+
+
+	return STATUS_SUCCESS;
+}
+
+
+You can find 'UNREFERENCE_PARAMETER()'
+this must be used unless you use the function's parameters. otherwise, an error occurs during the build process.
+
+I used the DbgPrintEx(). but you can use KdPrint() it is similar.
+And you can't see the text int the usual way. you must install the tool 'DbgView'  
+
+finally, return STATUS_SUCCESS
+it is defined by 
+#define STATUS_SUCCESS                   ((NTSTATUS)0x00000000L)    // ntsubauth
