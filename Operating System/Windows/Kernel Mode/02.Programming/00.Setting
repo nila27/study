@@ -1,2 +1,20 @@
 1. set solution platform x86 to x64
 2. Project Property -> Inf2cat -> Use Local Time -> yes(/uselocaltime)
+
+
+
+How to compile?
+
+in visual studio, we can use only build. not debuging
+
+and execute cmd to administartor authority
+
+and type
+
+sc create [driver name] binpath= "[directory]" type= kernel
+
+sc start [driver name]
+
+sc stop [driver name]
+
+sc delete [driver name]
