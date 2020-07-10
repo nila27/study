@@ -1,18 +1,20 @@
-#include <ntddk.h>https://github.com/nila27/study/tree/master/Operating%20System/Windows/Kernel%20Mode/02.Programming/01.HelloDriver
+#include <ntddk.h>
 
-VOID DriverUnload(PDRIVER_OBJECT DriverObject)
+VOID DriverUnload(_In_ PDRIVER_OBJECT DriverObject)
 {
-	_Unreferenced_parameter_(DriverObject);
+	UNREFERENCED_PARAMETER(DriverObject);
 }
 
 
-NTSTATUS DriverEntry(PDRIVER_OBJECT DriverObject, PUNICODE_STRING RegistryPath)
+NTSTATUS DriverEntry(_In_ PDRIVER_OBJECT DriverObject,_In_ PUNICODE_STRING RegistryPath)
 {
 	UNREFERENCED_PARAMETER(DriverObject);
 	UNREFERENCED_PARAMETER(RegistryPath);
 
 
 	DbgPrintEx(DPFLTR_IHVDRIVER_ID, 0, "Hello Driver");
+
+	DriverObject->DriverUnload = DriverUnload;
 
 
 	return STATUS_SUCCESS;
