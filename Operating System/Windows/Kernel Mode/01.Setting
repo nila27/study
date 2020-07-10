@@ -10,6 +10,11 @@ ctrl + shift + enter (Administration Authorize)
 type bcdedit /debug on 
 type bcdedit /testsigning on (when use windbg to use kernel mode debugging)
 
+and reboot the computer
+
+short cut is 
+
+type shutdown -r -f -t 0
 
 //////////////////////////////////////////////////////////////////////////////
 
