@@ -12,7 +12,7 @@ extern "C" NTSTATUS DriverEntry(PDRIVER_OBJECT DriverObject, PUNICODE_STRING Reg
 	UNREFERENCED_PARAMETER(RegistryPath);
 
 
-	DbgPrintEx(DPFLTR_IHVDRIVER_ID, 0, "Success");
+	DbgPrintEx(DPFLTR_IHVDRIVER_ID, 0, "Hello Driver");
 
 
 	return STATUS_SUCCESS;
