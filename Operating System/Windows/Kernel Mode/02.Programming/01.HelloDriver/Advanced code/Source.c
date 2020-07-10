@@ -12,7 +12,7 @@ NTSTATUS DriverEntry(_In_ PDRIVER_OBJECT DriverObject,_In_ PUNICODE_STRING Regis
 	UNREFERENCED_PARAMETER(RegistryPath);
 
 
-	DbgPrintEx(DPFLTR_IHVDRIVER_ID, 0, "Success");
+	DbgPrintEx(DPFLTR_IHVDRIVER_ID, 0, "Hello Driver");
 
 
 	return STATUS_SUCCESS;
