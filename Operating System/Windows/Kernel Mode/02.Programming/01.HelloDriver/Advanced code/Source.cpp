@@ -2,7 +2,7 @@
 
 VOID DriverUnload(_In_ PDRIVER_OBJECT DriverObject)
 {
-	_Unreferenced_parameter_(DriverObject);
+	UNREFERENCED_PARAMETER(DriverObject);
 }
 
 
@@ -13,6 +13,8 @@ extern "C" NTSTATUS DriverEntry(_In_ PDRIVER_OBJECT DriverObject,_In_ PUNICODE_S
 
 
 	DbgPrintEx(DPFLTR_IHVDRIVER_ID, 0, "Hello Driver");
+
+	DriverObject->DriverUnload = DriverUnload;
 
 
 	return STATUS_SUCCESS;
