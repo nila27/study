@@ -1,0 +1,2 @@
+1. set solution platform x86 to x64
+2. Project Property -> Inf2cat -> Use Local Time -> yes(/uselocaltime)
