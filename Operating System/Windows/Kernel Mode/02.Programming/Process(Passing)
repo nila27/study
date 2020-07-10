@@ -1,0 +1,24 @@
+ 1. EPROCESS의 ActiveProcessLinks Linked List를 이용해서 Traverse.
+ ( 왠만한 루트킷들은 이 값을 조작하므로 별로 소용없을지도 모르지만,
+  ZwQuerySystemInformation()을 후킹하여 결과값을 조작하는 식으로 숨기는 경우는
+  이 방법으로 손쉽게 찾아낼 수 있습니다. )
+
+ 2. ZwOpenProcess() Brute-Force Detection
+ 유효 PID인 0L부터 0xFFFFL까지 4의 배수들을 모두 Open해서 성공적으로 열어지는 프로세스를
+ 감지합니다. 단, 프로세스가 종료되었으나 핸들이 닫히지 않은 경우에도 Open되므로 추가적인 
+ 확인이 필요합니다.
+
+ 3. PspCidTable Traverse
+ Windows NT에는 PspCidTable이라는 Unexported Symbol이 존재하는데, 프로세스와 스레드에
+ 대한 개체 포인터들을 저장하고 있는 핸들 테이블의 일종입니다. 이를 트레버싱하여 숨겨진
+ 프로세스를 찾을 수도 있습니다.
+ ( 개체 포인터만 저장되어있으므로, 포인터-0x18 한 값이 가리키는 OBJECT_HEADER 헤더의
+ Type 필드가 PsProcessType인지 검사해줄 필요가 있습니다. )
+
+ 4. Process Handle Table Link Traverse
+ EPROCESS에는 HandleTable 필드가 존재하고 이 안에는 링크드 리스트가 존재합니다.
+ 이 리스트를 이용해서 트레버싱하면 모든 EPROCESS를 찾을 수 있습니다.
+
+ 5. CSRSS.EXE의 Handle Table Traversing
+ CSRSS.EXE 프로세스는 프로세스 시작을 커널에 통지하고 그 뒷처리를 하는 역할을 하기도 합니다.
+ (BaseSetProcessCreateNotify라는 Unexported/Undocumented Symbol을 이용합니다. 
