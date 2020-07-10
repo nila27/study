@@ -1,0 +1,5 @@
+what is differnce with basic code?
+
+Advanced code is used _In_ in function's parameter.
+
+_In_ is SAL(Source code Annotation Language)
