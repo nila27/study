@@ -1,3 +1,26 @@
 When execute basic code, you can see directory path. but when execute advanced code, just print imagefilename.
 
+Let's see the code
 
+VOID CreateProcessNotifyRoutineEx(PEPROCESS Process, HANDLE ProcessId, PPS_CREATE_NOTIFY_INFO CreateInfo)
+{
+    UNREFERENCED_PARAMETER(Process);
+    UNREFERENCED_PARAMETER(ProcessId);
+
+    PEPROCESS PP = Process;
+
+    if (CreateInfo == NULL)
+    {
+        DbgPrintEx(DPFLTR_IHVDRIVER_ID, 0, "Process Exit");
+    }
+    else
+    {
+        
+        DbgPrintEx(DPFLTR_IHVDRIVER_ID, 0, "Processs Name   :   (%s)\n", (const char*)(unsigned char*)PP + 0x450);
+
+    }
+}
+
+ofcourse, you can use paramter Process without using PP
+
+https://ezbeat.tistory.com/320
