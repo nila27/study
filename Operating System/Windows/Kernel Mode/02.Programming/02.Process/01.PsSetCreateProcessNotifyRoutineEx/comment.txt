@@ -1,1 +1,9 @@
+When you execute the code, you will see the filename with directory path.
+
+like \??\c:\windows\system32\svchost.exe
+
+that is createinfo->ImageFileName
+createinfo->commandLine is c:\windows\system32\svchost.exe
+
+
 
