@@ -14,7 +14,7 @@ VOID CreateProcessNotifyRoutineEx(PEPROCESS Process, HANDLE ProcessId, PPS_CREAT
     }
     else
     {
-        DbgPrintEx(DPFLTR_IHVDRIVER_ID, 0, "Processs Name   :   (%s)\n", (const char*)(unsigned char*)pNode);
+        DbgPrintEx(DPFLTR_IHVDRIVER_ID, 0, "Process Name   :   (%s)\n", (const char*)(unsigned char*)pNode);
 
     }
 }
