@@ -6,4 +6,49 @@ that is createinfo->ImageFileName
 createinfo->commandLine is c:\windows\system32\svchost.exe
 
 
+Let's explain the code
 
+PsSetCreateProcessNotifyRoutineEx is callback function that wether process execute or not
+
+Let's see define in ntddk.h
+
+PsSetCreateProcessNotifyRoutineEx (
+    _In_ PCREATE_PROCESS_NOTIFY_ROUTINE_EX NotifyRoutine,
+    _In_ BOOLEAN Remove
+    );
+
+You can see _In_ SAL. Last code in Hellodriver, you learned the SAL remeber it
+
+So, see driverentry function
+
+NTSTATUS DriverEntry(_In_ PDRIVER_OBJECT driverobject, _In_ PUNICODE_STRING RegistryPath)
+{
+	UNREFERENCED_PARAMETER(RegistryPath);
+
+    driverobject->DriverUnload = DriverUnload;
+
+    DbgPrintEx(DPFLTR_IHVAUDIO_ID, 0, "Start");
+
+
+    PsSetCreateProcessNotifyRoutineEx(CreateProcessNotifyRoutineEx, FALSE);
+
+    return STATUS_SUCCESS;
+}
+
+before we declared notifyroutine function, CreateProcessNotifyRoutineEx and load the function so FALSE flag
+
+watch out. we used the PsSetCreateProcessNotifyRoutineEx callback function, so must remove that
+
+
+
+Let's see DriverUnload
+
+VOID DriverUnload(_In_ PDRIVER_OBJECT driverobject)
+{
+    UNREFERENCED_PARAMETER(driverobject);
+    PsSetCreateProcessNotifyRoutineEx(CreateProcessNotifyRoutineEx, TRUE);
+
+    DbgPrintEx(DPFLTR_IHVAUDIO_ID, 0, "Stop");
+}
+
+You can find TRUE flag. now you know that
