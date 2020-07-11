@@ -1,1 +1,46 @@
 you must set before build the project
+
+Project -> Property -> Linker -> Command Line
+
+type /integritycheck
+
+
+
+.sys file also PE file format. 
+
+so we can find PE header's IMAGE_OPTIONAL_HEADER64. cause we will make x64
+
+in IMAGE_OPTIONAL_HEADER64, has DllCharacteristics field.
+
+Let's see DllCharacteristics Entries
+
+WORD Dllcharacteristics
+
+IMAGE_LIBRARY_PROCESS_INIT 0x0001 
+IMAGE_LIBRARY_PROCESS_TERM 0x0002
+IMAGE_LIBARRY_THREAD_INIT 0x0004
+IMAGE_LIBRARY_THREAD_TERM 0x0008
+// Reserved
+#define IMAGE_DLLCHARACTERISTICS_HIGH_ENTROPY_VA 0x0020
+#define IMAGE_DLLCHARACTERISTICS_DYNAMIC_BASE 0x0040
+#define IMAGE_DLLCHARACTERISTICS_FORCE_INTEGRITY 0x0080
+#define IMAGE_DLLCHARACTERISTICS_NX_COMPAT 0x0100
+#define IMAGE_DLLCHARACTERISTICS_NO_ISOLATION 0x0200
+#define IMAGE_DLLCHARACTERISTICS_NO_SEH 0x0400
+#define IMAGE_DLLCHARACTERISTICS_NO_BIND 0x0800
+#define IMAGE_DLLCHARACTERISTICS_APPCONTAINER 0x1000
+#define IMAGE_DLLCHARACTERISTICS_WDM_DRIVER 0x2000
+#define IMAGE_DLLCHARACTERISTICS_GUARD_CF 0x4000
+#define IMAGE_DLLCHARACTERISTICS_TERMINAL_SERVER_AWARE 0x8000
+
+
+
+You can find IMAGE_DLLCHARACTERISTICS_FORCE_INTEGRITY flag
+
+This flag causes the Windows memory manager to enforce a signaturecheck at load time on the binary file. 
+
+cause by default, /integritycheck is off
+
+You must change /intergritycheck flag on
+
+more information - https://social.technet.microsoft.com/wiki/contents/articles/255.forced-integrity-signing-of-portable-executable-pe-files.aspx
