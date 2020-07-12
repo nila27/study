@@ -63,4 +63,5 @@ Let's see eprcoess structure
    +0x878 MmHotPatchContext : Ptr64 Void      
    
    
+ You can get not only ImageFileName but also peb address, activeprocesslinks, etc..
  
