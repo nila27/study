@@ -23,4 +23,44 @@ VOID CreateProcessNotifyRoutineEx(PEPROCESS Process, HANDLE ProcessId, PPS_CREAT
 
 ofcourse, you can use paramter Process without using PP
 
-https://ezbeat.tistory.com/320
+like
+
+VOID CreateProcessNotifyRoutineEx(PEPROCESS Process, HANDLE ProcessId, PPS_CREATE_NOTIFY_INFO CreateInfo)
+{
+    UNREFERENCED_PARAMETER(Process);
+    UNREFERENCED_PARAMETER(ProcessId);
+
+    if (CreateInfo == NULL)
+    {
+        DbgPrintEx(DPFLTR_IHVDRIVER_ID, 0, "Process Exit");
+    }
+    else
+    {
+        
+        DbgPrintEx(DPFLTR_IHVDRIVER_ID, 0, "Processs Name   :   (%s)\n", (const char*)(unsigned char*)Process + 0x450);
+
+    }
+}
+
+It doesn't matter
+
+
+
+I used 0x450. what does mean?
+
+Windows expresses process as eprocess structure
+
+Let's see eprcoess structure
+
+   +0x000 Pcb              : _KPROCESS
+                   .
+                   .
+                   .             
+   +0x450 ImageFileName    : [15] UChar
+                   .
+                   .
+                   .    
+   +0x878 MmHotPatchContext : Ptr64 Void      
+   
+   
+ 
