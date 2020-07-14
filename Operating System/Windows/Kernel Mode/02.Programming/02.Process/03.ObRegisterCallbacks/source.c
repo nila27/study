@@ -25,7 +25,7 @@ NTSTATUS ObRegistercallbackfunction()
     OB_CALLBACK_REGISTRATION OCR = { 0, };
     OB_OPERATION_REGISTRATION OOR = { 0, };
 
-    OCR.Version = ObGetFilterVersion();
+    OCR.Version = OB_FLT_REGISTRATION_VERSION;
     OCR.OperationRegistrationCount = 1;
 
     RtlInitUnicodeString(&OCR.Altitude, L"1234");
