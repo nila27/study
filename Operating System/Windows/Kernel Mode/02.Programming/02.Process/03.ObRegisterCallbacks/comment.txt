@@ -1,1 +1,18 @@
+NTSTATUS ObRegisterCallbacks(_In_ POB_CALLBACK_REGISTRATION CallbackRegistration, _Outptr_ PVOIOD *RegistrationHandle);
 
+Prior to registration, an OB_CALLBACK_REGISTRATION structure must be initialized, which provides teh necessary details about what the driver is registering for.
+The RegistrationHandle is the return value upon a successful registartion, which is just an opaque pointer used for unregistration by calling obUnregisterCallbacks.
+
+Let's see OB_CALLBACK_REGISTRATION
+
+this is define in wdm.h
+
+typedef struct _OB_CALLBACK_REGISTRATION {
+    _In_ USHORT                     Version;
+    _In_ USHORT                     OperationRegistrationCount;
+    _In_ UNICODE_STRING             Altitude;
+    _In_ PVOID                      RegistrationContext;
+    _In_ OB_OPERATION_REGISTRATION  *OperationRegistration;
+} OB_CALLBACK_REGISTRATION, *POB_CALLBACK_REGISTRATION;
+
+Version is a just a constant that must be set to OB_FLT_REGISTRATION_VERSION(
