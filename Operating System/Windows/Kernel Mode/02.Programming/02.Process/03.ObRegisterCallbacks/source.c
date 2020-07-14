@@ -65,3 +65,4 @@ NTSTATUS DriverEntry(_In_ PDRIVER_OBJECT driverobject, _In_ PUNICODE_STRING Regi
 
     return STATUS_SUCCESS;
 }
+
