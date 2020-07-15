@@ -38,4 +38,9 @@ this pointeris exported as global kernel variables. like PsPorcessType, PsThreaw
 
 Operation is an bit flags enumeration selecting create, open is OB_OPERATION_HANDLE_CREATE) and duplicate is OB_OPERATION_HANDLE_DUPLICATE
 
+OB_OPERATION_HANDLE_CREATE refers to calls to user modefunction such as CreateProcess, CreateThread, CreateDesktop, OpenProcess, OpenThread, OPenDesktop.. so on 
+
+OB_OPERATION_HANDLE_DUPLICATE refers to handle duplication for DuplicateHandle user mode API
+
+
 
