@@ -15,7 +15,7 @@ typedef struct _OB_CALLBACK_REGISTRATION {
     _In_ OB_OPERATION_REGISTRATION  *OperationRegistration;
 } OB_CALLBACK_REGISTRATION, *POB_CALLBACK_REGISTRATION;
 
-Version is a just a constant that must be set to OB_FLT_REGISTRATION_VERSION(0x100) also use ObGetFilterVersion() 
+Version is a just a constant that must be set to OB_FLT_REGISTRATION_VERSION(0x100) also using ObGetFilterVersion() produce same effect.
 OperationRegistrationCount determins the number of OB_OPERATION_REGISTRATION structures that are pointed to by OperaationREgistration.
 Altitude specifies a number that affects the order of callbacks invocations for this driver. (Altitude will study later in minifilter)
 
