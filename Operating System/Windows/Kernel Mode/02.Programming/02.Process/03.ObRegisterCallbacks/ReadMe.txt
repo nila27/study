@@ -1,3 +1,7 @@
+ObRegisterCallbacks function is pretty compicated
+
+Let's see step by step
+
 NTSTATUS ObRegisterCallbacks(_In_ POB_CALLBACK_REGISTRATION CallbackRegistration, _Outptr_ PVOIOD *RegistrationHandle);
 
 Prior to registration, an OB_CALLBACK_REGISTRATION structure must be initialized, which provides teh necessary details about what the driver is registering for.
