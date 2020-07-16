@@ -97,20 +97,30 @@ typedef struct _PS_CREATE_NOTIFY_INFO {
     _Inout_ NTSTATUS CreationStatus;
 } PS_CREATE_NOTIFY_INFO, *PPS_CREATE_NOTIFY_INFO;
 
-there is a flags, and fields
+size - The size, in bytes, of this structure. The operating system uses this size to indicate the type of structure that it passes to CreateProcessNotifyEx. Currently, this member is always sizeof(PS_CREATE_NOTIFY_INFO).
+
+Flags - Use the FileOpenNameAvailable member instead.
+
+FileOpenNameAvailable - specifies wether the ImageFileName member contains the exact file name that is used to topen the process executable file
 
 IsSubsystemProcesss - this flag is set if this process is a Pico process. this can only be if the driver registered with PsSetCreateProcessNotifyRoutineEx2
+IsSubsystemProcess is only populated for subsystem processes other than Win32 when a driver has registered through PsSetCreateProcessNotifyRoutineEx2 with a type that allows for notifications from subsystem processes. 
+When IsSubsystemProcess is set, the FileObject, ImageFileName, and CommandLine may be NULL. Drivers should use ProcessSubsystemInformation to query the subsystem type if needed. For more information, see NtQueryInformationProcess. 
 
+ParentProcessId : The process ID of the parent process for the new process. Note that the parent process is not necessarily the same process as the process that created the new process. 
+The new process can inherit certain properties of the parent process, such as handles or shared memory. (The process ID of the process creator is given by CreatingThreadId->UniqueProcess.)
 
-ParentProcessId : the parent processs ID(not a handle). this process may be the same provided by CreateThreadId. 
-UniqueProcesss, but may be different, as it's possible as part of process creation to pass in a different parent inherit some properties from
-
-CreatingThreadId : a combination of thread and process Id of the caller to the processs creation function
+CreatingThreadId : a combination of thread and process Id of the caller to the processs creation function. 
+CreatingThreadId->UniqueProcess contains the process ID
+CreatingThreadId->UniqueThread contains the thread ID.
 
 ImageFileName : the image file name of the executable, available if the flag FileOpenNameAvailable is set
+if IsSubsystemProcess is TRUE, this value may be NULL.
 
-CommandLine : the full command line used to create the process. Note that it may be NULL. 
+CommandLine : A pointer to a UNICODE_STRING string that holds the command that is used to execute the process. the full command line used to create the process. 
+If the command is not available, CommandLine is NULL. 
+If IsSubsystemProcess is TRUE, this value maybe NULL. 
 
-CreateStatus : this is the status that would return to the caller. this is where the driver can stop the process from being created by placing some failure status
+CreateStatus : The NTSTATUS value to return for the process-creation operation. Drivers can change this value to an error code to prevent the process from being created.
 
 
