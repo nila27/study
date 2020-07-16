@@ -46,7 +46,7 @@ OB_PRE_OPERATION_CALLBACK is invoked before the actual create, open, duplicate o
 
 now, we need to see pre, post operation callback function.
 
-1st, let see the pre operation callback function.
+1st, let's see the pre operation callback function.
 
 OB_PREOP_CALLBACK_STATUS PreCallback(PVOID RegistrationContext, POB_PRE_OPERATION_INFORMATION pOperationInformation)
 {
@@ -95,7 +95,7 @@ typedef union _OB_PRE_OPERATION_PARAMETERS {
 
 Now we have to look up OB_PRE_CREATE_HANDLE_INFORMATION, OB_PRE_DUPLICATE_HANDLE_INFORMATION
 
-First, Let's see OB_PRE_CREATE_HANDLE_INFORMATION
+Let's see OB_PRE_CREATE_HANDLE_INFORMATION
 
 this is define in wdm.h
 
@@ -168,4 +168,30 @@ typedef struct _OB_PRE_DUPLICATE_HANDLE_INFORMATION {
     _In_ PVOID                  TargetProcess;
 } OB_PRE_DUPLICATE_HANDLE_INFORMATION, * POB_PRE_DUPLICATE_HANDLE_INFORMATION;
 
+DesiredAccess, OriginalDesiredAccess is same with _OB_PRE_CREATE_HANDLE_INFORMATION's entity
+
+SourceProcess is which a handle is being duplicated
+
+TargetProcess is process the new handle will be duplicated into
+
+
+
+
+2nd, let's see the post operation callback function.
+
+typedef struct _OB_POST_OPERATION_INFORMATION {
+    _In_ OB_OPERATION  Operation;
+    union {
+        _In_ ULONG Flags;
+        struct {
+            _In_ ULONG KernelHandle:1;
+            _In_ ULONG Reserved:31;
+        };
+    };
+    _In_ PVOID                          Object;
+    _In_ POBJECT_TYPE                   ObjectType;
+    _In_ PVOID                          CallContext;
+    _In_ NTSTATUS                       ReturnStatus;
+    _In_ POB_POST_OPERATION_PARAMETERS  Parameters;
+} OB_POST_OPERATION_INFORMATION,*POB_POST_OPERATION_INFORMATION;
 
