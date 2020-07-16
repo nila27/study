@@ -104,6 +104,44 @@ typedef struct _OB_PRE_CREATE_HANDLE_INFORMATION {
     _In_ ACCESS_MASK            OriginalDesiredAccess;
 } OB_PRE_CREATE_HANDLE_INFORMATION, *POB_PRE_CREATE_HANDLE_INFORMATION;
 
+Normally DesiredAccess is copy of what is in OriginalDesiredAccess. 
+
+OriginalDesiredAccess is an access mask specified by the caller.
+
+this is define in wdm.h
+
+//
+//  The following are masks for the predefined standard access types
+//
+#define DELETE                           (0x00010000L)
+#define READ_CONTROL                     (0x00020000L)
+#define WRITE_DAC                        (0x00040000L)
+#define WRITE_OWNER                      (0x00080000L)
+#define SYNCHRONIZE                      (0x00100000L)
+#define STANDARD_RIGHTS_REQUIRED         (0x000F0000L)
+#define STANDARD_RIGHTS_READ             (READ_CONTROL)
+#define STANDARD_RIGHTS_WRITE            (READ_CONTROL)
+#define STANDARD_RIGHTS_EXECUTE          (READ_CONTROL)
+#define STANDARD_RIGHTS_ALL              (0x001F0000L)
+#define SPECIFIC_RIGHTS_ALL              (0x0000FFFFL)
+//
+// AccessSystemAcl access type
+//
+#define ACCESS_SYSTEM_SECURITY           (0x01000000L)
+//
+// MaximumAllowed access type
+//
+#define MAXIMUM_ALLOWED                  (0x02000000L)
+//
+//  These are the generic rights.
+//
+#define GENERIC_READ                     (0x80000000L)
+#define GENERIC_WRITE                    (0x40000000L)
+#define GENERIC_EXECUTE                  (0x20000000L)
+#define GENERIC_ALL                      (0x10000000L)
+
+You can see usually values that
+
 40
 1000
 1010
@@ -116,7 +154,12 @@ typedef struct _OB_PRE_CREATE_HANDLE_INFORMATION {
 101000
 1FFFFF
 
+this will explain later.
 
+
+Now see the OB_PRE_DUPLICATE_HANDLE_INFORMATION strucutre
+
+this is define in wdm.h
 
 typedef struct _OB_PRE_DUPLICATE_HANDLE_INFORMATION {
     _Inout_ ACCESS_MASK         DesiredAccess;
@@ -124,3 +167,5 @@ typedef struct _OB_PRE_DUPLICATE_HANDLE_INFORMATION {
     _In_ PVOID                  SourceProcess;
     _In_ PVOID                  TargetProcess;
 } OB_PRE_DUPLICATE_HANDLE_INFORMATION, * POB_PRE_DUPLICATE_HANDLE_INFORMATION;
+
+
