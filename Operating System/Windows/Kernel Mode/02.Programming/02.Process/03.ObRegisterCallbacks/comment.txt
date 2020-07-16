@@ -78,9 +78,49 @@ typedef struct _OB_PRE_OPERATION_INFORMATION {
 Operation is that indicates what operation
 
 Object is the pointer to the object for that a handle is create, open, duplicate
-
 if the target is process, Object is Eprocess structre address, or is thread, Object is ETHREAD structure address
 
 ObjectType is object type like, PsProcessType, PsThreadType or ExDesktopObjectType.
 
+CallContext is a driver defined value which is propagated to the post callback for this instance
 
+Parameter is OB_PRE_OPERATION_PARAMERTS structure
+
+this is define in wdm.h
+
+typedef union _OB_PRE_OPERATION_PARAMETERS {
+    _Inout_ OB_PRE_CREATE_HANDLE_INFORMATION        CreateHandleInformation;
+    _Inout_ OB_PRE_DUPLICATE_HANDLE_INFORMATION     DuplicateHandleInformation;
+} OB_PRE_OPERATION_PARAMETERS, *POB_PRE_OPERATION_PARAMETERS;
+
+Now we have to look up OB_PRE_CREATE_HANDLE_INFORMATION, OB_PRE_DUPLICATE_HANDLE_INFORMATION
+
+First, Let's see OB_PRE_CREATE_HANDLE_INFORMATION
+
+this is define in wdm.h
+
+typedef struct _OB_PRE_CREATE_HANDLE_INFORMATION {
+    _Inout_ ACCESS_MASK         DesiredAccess;
+    _In_ ACCESS_MASK            OriginalDesiredAccess;
+} OB_PRE_CREATE_HANDLE_INFORMATION, *POB_PRE_CREATE_HANDLE_INFORMATION;
+
+40
+1000
+1010
+1028
+102A
+1400
+2000
+21410
+100000
+101000
+1FFFFF
+
+
+
+typedef struct _OB_PRE_DUPLICATE_HANDLE_INFORMATION {
+    _Inout_ ACCESS_MASK         DesiredAccess;
+    _In_ ACCESS_MASK            OriginalDesiredAccess;
+    _In_ PVOID                  SourceProcess;
+    _In_ PVOID                  TargetProcess;
+} OB_PRE_DUPLICATE_HANDLE_INFORMATION, * POB_PRE_DUPLICATE_HANDLE_INFORMATION;
