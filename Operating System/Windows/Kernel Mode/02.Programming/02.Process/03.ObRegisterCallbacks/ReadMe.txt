@@ -81,6 +81,9 @@ Operation is that indicates what operation. This member might be one of the foll
 OB_OPERATION_HANDLE_CREATE is a new handle to a process or thread will be opened. Use Parameters->CreateHandleInformation for create-specific information.
 OB_OPERATION_HANDLE_DUPLICATE is a process or thread handle will be duplicated. Use Parameters->DuplicateHandleInformation for duplicate-specific information.
 
+KernelHandle is specifies whether the handle is a kernel handle. If this value is TRUE, the handle is a kernel handle. Otherwise, the handle is not a kernel handle.
+This flag allows the driver to perhaps ignore kernel request. cause kernel handles can only created by kernel code
+
 Object is the pointer to the object for that a handle is create, open, duplicate
 if the target is process, Object is Eprocess structre address, or is thread, Object is ETHREAD structure address
 
@@ -211,6 +214,10 @@ TargetProcess is process the new handle will be duplicated into
 
 2nd, let's see the post operation callback function.
 
+except for ReturnStatus and Parameters, it is the same as _OB_PRE_OPERATION_INFORMATION so omit
+
+this is define in wdm.h
+
 typedef struct _OB_POST_OPERATION_INFORMATION {
     _In_ OB_OPERATION  Operation;
     union {
@@ -227,11 +234,37 @@ typedef struct _OB_POST_OPERATION_INFORMATION {
     _In_ POB_POST_OPERATION_PARAMETERS  Parameters;
 } OB_POST_OPERATION_INFORMATION,*POB_POST_OPERATION_INFORMATION;
 
-Operation is the yupe of handle operaiton. This member might be one of the following values OB_OPERATION_HANDLE_CREATE, OB_OPERATION_HANDLE_DUPLICATE
-OB_OPERATION_HANDLE_CREATE is a new handle to a process or thread was created. Use Parameters->CreateHandleInformation for create-specific information.
-OB_OPERATION_HANDLE_DUPLICATE is a process or thread handle was duplicated. Use Parameters->DuplicateHandleInformation for duplicate-specific information.
+ReturnStatus is user will get back a valid handle operation.
+
+Parameters is POB_POST_OPERATION_PARAMETERS structures 
+
+this is define in wdm.h
+
+typedef union _OB_POST_OPERATION_PARAMETERS {
+  OB_POST_CREATE_HANDLE_INFORMATION    CreateHandleInformation;
+  OB_POST_DUPLICATE_HANDLE_INFORMATION DuplicateHandleInformation;
+} OB_POST_OPERATION_PARAMETERS, *POB_POST_OPERATION_PARAMETERS;
 
 
+Now we have to look up OB_POST_CREATE_HANDLE_INFORMATION, OB_PRE_DUPLICATE_HANDLE_INFORMATION
 
+Let's see OB_POST_CREATE_HANDLE_INFORMATION
 
+this is define in wdm.h
+
+typedef struct _OB_POST_CREATE_HANDLE_INFORMATION {
+  ACCESS_MASK GrantedAccess;
+} OB_POST_CREATE_HANDLE_INFORMATION, *POB_POST_CREATE_HANDLE_INFORMATION;
+
+GrantedAccess specifies the access that is granted for the handle
+
+Now see the OB_POST_DUPLICATE_HANDLE_INFORMATION strucutre
+
+this is define in wdm.h
+
+typedef struct _OB_POST_DUPLICATE_HANDLE_INFORMATION {
+    _In_ ACCESS_MASK            GrantedAccess;
+} OB_POST_DUPLICATE_HANDLE_INFORMATION, * POB_POST_DUPLICATE_HANDLE_INFORMATION;
+
+same as OB_POST_CREATE_HANDLE_INFORMATION
 
