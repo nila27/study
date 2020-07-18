@@ -11,10 +11,10 @@ void LoadImageRoutine(PUNICODE_STRING FullImageName, HANDLE ProcessId, PIMAGE_IN
 
 VOID DriverUnload(_In_ PDRIVER_OBJECT driverobject)
 {
-    UNREFERENCED_PARAMETER(driverobject);
-    PsRemoveLoadImageNotifyRoutine(LoadImageRoutine);
-    DbgPrintEx(DPFLTR_IHVAUDIO_ID, 0, "Stop");
-}
+    	UNREFERENCED_PARAMETER(driverobject);
+    	PsRemoveLoadImageNotifyRoutine(LoadImageRoutine);
+  	  DbgPrintEx(DPFLTR_IHVAUDIO_ID, 0, "Stop");
+}	
 
 
 NTSTATUS DriverEntry(_In_ PDRIVER_OBJECT driverobject, _In_ PUNICODE_STRING RegistryPath)
@@ -22,11 +22,11 @@ NTSTATUS DriverEntry(_In_ PDRIVER_OBJECT driverobject, _In_ PUNICODE_STRING Regi
 	UNREFERENCED_PARAMETER(DriverObject);
 	UNREFERENCED_PARAMETER(RegistryPath);
 
-  driverobject->DriverUnload = DriverUnload;
+ 	driverobject->DriverUnload = DriverUnload;
 
-  DbgPrintEx(DPFLTR_IHVAUDIO_ID, 0, "Start");
+  	DbgPrintEx(DPFLTR_IHVAUDIO_ID, 0, "Start");
 
-	PsSetLoadImageNotifyRoutine(LoadImageRoutine);
+  	PsSetLoadImageNotifyRoutine(LoadImageRoutine);
 
-  return STATUS_SUCCESS;
+  	return STATUS_SUCCESS;
 }
