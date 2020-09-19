@@ -16,7 +16,18 @@ If you set empty this type, current date is set to build date, version is set ba
 
 CatalogFile : store the digital signature of the driver package(like sys, inf, cat)
 
-strings :
+[SourceDisksFiles]
+
+[SourceDiskNames]
+
+[DestinationDirs]
+
+[Manufacturer]
+
+
+
+
+[strings]
 
 
 
