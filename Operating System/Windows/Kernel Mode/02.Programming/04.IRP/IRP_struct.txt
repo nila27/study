@@ -1,4 +1,6 @@
 
+This is defined in wdm.h
+
 typedef struct DECLSPEC_ALIGN(MEMORY_ALLOCATION_ALIGNMENT) _IRP {
     CSHORT Type;
     USHORT Size;
