@@ -1,6 +1,11 @@
 IRP(I/O Request Packet)
 
-Before you learn about IRP, you have to study IO Stack Location
+
+
+
+
+
+
 
 
 
