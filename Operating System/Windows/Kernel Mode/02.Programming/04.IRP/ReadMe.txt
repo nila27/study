@@ -5,106 +5,24 @@ typedef struct DECLSPEC_ALIGN(MEMORY_ALLOCATION_ALIGNMENT) _IRP {
     CSHORT Type;
     USHORT Size;
 
-
-    //
-    // Define the common fields used to control the IRP.
-    //
-
-    //
-    // Define a pointer to the Memory Descriptor List (MDL) for this I/O
-    // request.  This field is only used if the I/O is "direct I/O".
-    //
-
     PMDL MdlAddress;
-
-    //
-    // Flags word - used to remember various flags.
-    //
-
     ULONG Flags;
-
-    //
-    // The following union is used for one of three purposes:
-    //
-    //    1. This IRP is an associated IRP.  The field is a pointer to a master
-    //       IRP.
-    //
-    //    2. This is the master IRP.  The field is the count of the number of
-    //       IRPs which must complete (associated IRPs) before the master can
-    //       complete.
-    //
-    //    3. This operation is being buffered and the field is the address of
-    //       the system space buffer.
-    //
-
     union {
         struct _IRP *MasterIrp;
         __volatile LONG IrpCount;
         PVOID SystemBuffer;
     } AssociatedIrp;
 
-    //
-    // Thread list entry - allows queuing the IRP to the thread pending I/O
-    // request packet list.
-    //
-
     LIST_ENTRY ThreadListEntry;
-
-    //
-    // I/O status - final status of operation.
-    //
-
     IO_STATUS_BLOCK IoStatus;
-
-    //
-    // Requester mode - mode of the original requester of this operation.
-    //
-
     KPROCESSOR_MODE RequestorMode;
-
-    //
-    // Pending returned - TRUE if pending was initially returned as the
-    // status for this packet.
-    //
-
     BOOLEAN PendingReturned;
-
-    //
-    // Stack state information.
-    //
-
     CHAR StackCount;
     CHAR CurrentLocation;
-
-    //
-    // Cancel - packet has been canceled.
-    //
-
     BOOLEAN Cancel;
-
-    //
-    // Cancel Irql - Irql at which the cancel spinlock was acquired.
-    //
-
     KIRQL CancelIrql;
-
-    //
-    // ApcEnvironment - Used to save the APC environment at the time that the
-    // packet was initialized.
-    //
-
     CCHAR ApcEnvironment;
-
-    //
-    // Allocation control flags.
-    //
-
     UCHAR AllocationFlags;
-
-    //
-    // User parameters.
-    //
-
     PIO_STATUS_BLOCK UserIosb;
     PKEVENT UserEvent;
     union {
@@ -118,135 +36,51 @@ typedef struct DECLSPEC_ALIGN(MEMORY_ALLOCATION_ALIGNMENT) _IRP {
         LARGE_INTEGER AllocationSize;
     } Overlay;
 
-    //
-    // CancelRoutine - Used to contain the address of a cancel routine supplied
-    // by a device driver when the IRP is in a cancelable state.
-    //
-
     __volatile PDRIVER_CANCEL CancelRoutine;
-
-    //
-    // Note that the UserBuffer parameter is outside of the stack so that I/O
-    // completion can copy data back into the user's address space without
-    // having to know exactly which service was being invoked.  The length
-    // of the copy is stored in the second half of the I/O status block. If
-    // the UserBuffer field is NULL, then no copy is performed.
-    //
-
     PVOID UserBuffer;
-
-    //
-    // Kernel structures
-    //
-    // The following section contains kernel structures which the IRP needs
-    // in order to place various work information in kernel controller system
-    // queues.  Because the size and alignment cannot be controlled, they are
-    // placed here at the end so they just hang off and do not affect the
-    // alignment of other fields in the IRP.
-    //
-
+    
     union {
 
         struct {
 
             union {
-
-                //
-                // DeviceQueueEntry - The device queue entry field is used to
-                // queue the IRP to the device driver device queue.
-                //
-
+            
                 KDEVICE_QUEUE_ENTRY DeviceQueueEntry;
 
                 struct {
-
-                    //
-                    // The following are available to the driver to use in
-                    // whatever manner is desired, while the driver owns the
-                    // packet.
-                    //
 
                     PVOID DriverContext[4];
 
                 } ;
 
             } ;
-
-            //
-            // Thread - pointer to caller's Thread Control Block.
-            //
-
+            
             PETHREAD Thread;
-
-            //
-            // Auxiliary buffer - pointer to any auxiliary buffer that is
-            // required to pass information to a driver that is not contained
-            // in a normal buffer.
-            //
-
             PCHAR AuxiliaryBuffer;
-
-            //
-            // The following unnamed structure must be exactly identical
-            // to the unnamed structure used in the minipacket header used
-            // for completion queue entries.
-            //
-
+            
             struct {
-
-                //
-                // List entry - used to queue the packet to completion queue, among
-                // others.
-                //
-
+            
                 LIST_ENTRY ListEntry;
 
                 union {
 
-                    //
-                    // Current stack location - contains a pointer to the current
-                    // IO_STACK_LOCATION structure in the IRP stack.  This field
-                    // should never be directly accessed by drivers.  They should
-                    // use the standard functions.
-                    //
-
                     struct _IO_STACK_LOCATION *CurrentStackLocation;
-
-                    //
-                    // Minipacket type.
-                    //
-
                     ULONG PacketType;
                 };
             };
-
-            //
-            // Original file object - pointer to the original file object
-            // that was used to open the file.  This field is owned by the
-            // I/O system and should not be used by any other drivers.
-            //
 
             PFILE_OBJECT OriginalFileObject;
 
         } Overlay;
 
-        //
-        // APC - This APC control block is used for the special kernel APC as
-        // well as for the caller's APC, if one was specified in the original
-        // argument list.  If so, then the APC is reused for the normal APC for
-        // whatever mode the caller was in and the "special" routine that is
-        // invoked before the APC gets control simply deallocates the IRP.
-        //
-
         KAPC Apc;
-
-        //
-        // CompletionKey - This is the key that is used to distinguish
-        // individual I/O operations initiated on a single file handle.
-        //
 
         PVOID CompletionKey;
 
     } Tail;
 
 } IRP;
+
+
+
+
