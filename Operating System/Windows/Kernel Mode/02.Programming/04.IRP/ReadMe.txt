@@ -1,7 +1,9 @@
 IRP(I/O Request Packet)
 
 
+If you allocate IRP, must specify how many I/O stack locations need to be allocated with the IRP.
 
+Like this, IRP must be one or more I/O Stack Location  
 
 
 
