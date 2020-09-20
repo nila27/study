@@ -5,7 +5,7 @@ If you allocate IRP, must specify how many I/O stack locations need to be alloca
 
 Like this, IRP must be one or more I/O Stack Location  
 
-I/O stack Location numbers correspond with device stack numbers
+I/O stack Location numbers correspond with device object numbers in device stack 
 
 
 
