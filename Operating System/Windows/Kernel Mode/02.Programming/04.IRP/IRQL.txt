@@ -1,0 +1,17 @@
+IRQL(Interrupt Request Level)
+
+IRQL : 0~31 
+
+DriverEntry : PASSIVE_LEVEL(0)
+AddDevice : PASSIVE_LEVEL(0)
+PnPDispatch : PASSIVE_LEVEL(0) or APC_LEVEL(1)
+IRPDispatch : PASSIVE_LEVEL(0)
+DriverUnload  : Passive_LEVEL(0)
+
+
+
+
+
+
+KeRaiseIrql()
+KeLowerIrql()
