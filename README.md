@@ -1,3 +1,3 @@
 # study
 
-I'm senior studying OS which is windows
+I'm senior in college studying OS which is windows
