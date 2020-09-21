@@ -1,5 +1,6 @@
 IRP(I/O Request Packet)
 
+IRP is allocated by the managers(I/O Manager, P&P Manager, Power Manager) or driver to another driver
 
 If you allocate IRP, must specify how many I/O stack locations need to be allocated with the IRP.
 
