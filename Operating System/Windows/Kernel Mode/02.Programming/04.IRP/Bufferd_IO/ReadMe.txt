@@ -14,5 +14,4 @@ Cause the buffer is in system space, driver can use the system buffer pointer di
 
 
 
-
-BUFFERD_I/O is I/O Manager 
+If Buffer's size is pretty larger, BUFFERD_I/O can waste virtual memory
