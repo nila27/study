@@ -6,7 +6,7 @@ DeviceObject->Flags |= DO_BUFFERD_IO;
 
 
 
-BUFFERD_I/O is I/O Manager allocate the temporary buffer from non-paged pool same as user buffer size
+BUFFERD_I/O is I/O Manager allocate the temporary buffer(System Buffer) from non-paged pool same as user buffer size
 
 You can find the buffer size intthe current I/O stack location's Parameters.Read.Length or Parameters.Write.Length
 
