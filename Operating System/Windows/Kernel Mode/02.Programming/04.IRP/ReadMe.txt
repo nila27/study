@@ -9,7 +9,8 @@ Like this, IRP must one or more I/O Stack Location
 I/O stack Location numbers correspond with device object numbers in device stack 
 
 
-
+I/O CallDriver
+I/O Complete Request
 
 
 
